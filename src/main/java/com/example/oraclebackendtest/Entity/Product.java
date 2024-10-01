@@ -24,7 +24,15 @@ import java.time.LocalDateTime;
 @Data @NoArgsConstructor @AllArgsConstructor
 public class Product {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //la manera apropiada para crear la id en oracle es con secuencia, no con identity
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,
+        generator = "product_generator"
+    )
+    @SequenceGenerator(
+            name = "product_generator",
+            sequenceName = "product_sequence_name",
+            allocationSize = 1
+    )
     private long id;
 
     //añadir columna
@@ -41,7 +49,5 @@ public class Product {
 
     @UpdateTimestamp
     private LocalDateTime updated;
-
-
 
 }
